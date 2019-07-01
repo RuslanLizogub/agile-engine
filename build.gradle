@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group 'agile.engine'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.testng/testng
+    compile group: 'org.testng', name: 'testng', version: '6.14.3'
+    // https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+    compile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-server
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: '3.141.59'
+    // https://mvnrepository.com/artifact/com.codeborne/selenide
+    compile group: 'com.codeborne', name: 'selenide', version: '5.2.4'
+    // Manage browsers for selenium
+    compile 'io.github.bonigarcia:webdrivermanager:3.6.1'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+}
+
+def api = project.hasProperty("api")
+def ui = project.hasProperty("ui")
+
+test {
+    useTestNG() {
+        dependsOn cleanTest
+        useDefaultListeners = true
+
+        if(api) {
+            suites "src/test/resources/api.xml"
+        }
+        
+        if(ui) {
+            suites "src/test/resources/ui.xml"
+        }
+    }
+    testLogging.showStandardStreams = true
+}

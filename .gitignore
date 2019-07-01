@@ -1,0 +1,12 @@
+# All directories should end in / (information used by ide.gradle)
+
+# Gradle
+.gradle/
+build/
+
+# IDEA
+*.iws
+*.ipr
+*.iml
+.idea/
+out/
